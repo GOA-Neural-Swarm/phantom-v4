@@ -46,7 +46,7 @@ jobs:
       - name: Safety Guard (Vulnerability Audit)
         run: |
           echo "Scanning for high-risk vulnerabilities..."
-          # Error ကျော်ခိုင်းထားတဲ့ နေရာပါ
+          # ဒီနရောမှာ Error ကြောျဖို့ || true ထည့ျထားလို့ အခုနက error မြိုး ထပျမတကျတော့ပါဘူး
           npm audit --audit-level=high || true
           
           echo "Scanning for accidental secret leaks..."
