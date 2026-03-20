@@ -15,24 +15,17 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
+      
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-
-      - name: Install Tools
-        run: |
-          npm install -g eslint prettier
-          npm install --package-lock-only || true
-
-      - name: Safety Guard (The Force Bypass)
-        # အနီရောင် လုံးဝ မပြအောင် ဒီနေရာမှာ continue-on-error သုံးထားတယ်
-        continue-on-error: true
-        run: |
-          echo "Scanning vulnerabilities..."
-          # exit 1 ကို ဖြုတ်လိုက်ပြီ ဖြစ်လို့ error တွေ့လည်း အနီရောင် မတက်တော့ဘူး
-          npm audit --audit-level=high || echo "Vulnerabilities found but ignoring for evolution flow."
+      
+      - name: Assembly (Clean Install)
+        run: npm ci || npm install
+      
+      - name: Safety Audit (Should be clean now)
+        run: npm audit --audit-level=high
 
       - name: Final Integrity Merge
         run: |
@@ -40,8 +33,6 @@ jobs:
           git config --global user.email "auditor@goa-natural-order.ai"
           git fetch origin evolution-lab
           git fetch origin main
-
-          # Main branch ကို checkout ဆင်းပြီး merge လုပ်မယ်
           git checkout main
-          git merge --no-ff origin/evolution-lab -m "EVOLUTION: Logic upgraded (Bypass Audit)." || exit 0
+          git merge --no-ff origin/evolution-lab -m "EVOLUTION: High-integrity logic upgrade."
           git push origin main
