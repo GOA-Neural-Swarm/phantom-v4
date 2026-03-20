@@ -40,7 +40,7 @@ jobs:
           git config --global user.email "auditor@goa-natural-order.ai"
           git fetch origin evolution-lab
           git fetch origin main
-          
+
           # Main branch ကို checkout ဆင်းပြီး merge လုပ်မယ်
           git checkout main
           git merge --no-ff origin/evolution-lab -m "EVOLUTION: Logic upgraded (Bypass Audit)." || exit 0
